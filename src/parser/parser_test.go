@@ -3,6 +3,7 @@ package parser
 import (
 	"testing"
 
+	"github.com/hiroshimashu/monkey-interpreter/src/ast"
 	"github.com/hiroshimashu/monkey-interpreter/src/lexer"
 )
 
@@ -40,4 +41,29 @@ func TestLetStatement(t *testing.T) {
 		}
 	}
 
+}
+
+func testLetStatement(t *testing.T, s ast.Statement, name string) bool {
+	if s.TokenLiteral() != "let" {
+		t.Errorf("s.TokenLiteral not 'lt'. got=%q", s.TokenLiteral())
+		return false
+	}
+
+	letStmt, ok := s.(*ast.LetStatement)
+	if !ok {
+		t.Errorf("s not *ast.LetStatement. got=%T", s)
+		return false
+	}
+
+	if letStmt.Name.Value != name {
+		t.Errorf("letStme.Name.Value not '%s'. got=%s", name, letStmt.Name.Value)
+		return false
+	}
+
+	if letStmt.Name.TokenLiteral() != name {
+		t.Errorf("letStmt.TokenLiteral() not %s got=%s", name, letStmt.Name.TokenLiteral())
+		return false
+	}
+
+	return true
 }
