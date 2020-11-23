@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"github.com/hiroshimashu/monkey-interpreter/src/ast"
 	"github.com/hiroshimashu/monkey-interpreter/src/lexer"
 	"github.com/hiroshimashu/monkey-interpreter/src/token"
 )
@@ -15,14 +16,14 @@ func New(l *lexer.Lexer) *Parser {
 	p := &Parser{l:l}
 
 	p.nextToken()
-	p.nextTokne()
+	p.nextToken()
 
 	return p 
 }
 
 func (p *Parser) nextToken() {
 	p.curToken = p.peekToken
-	p.nextToken = p.l.NextToken()
+	p.peekToken = p.l.NextToken()
 }
 
 func (p *Parser) ParseProgram() *ast.Program {
